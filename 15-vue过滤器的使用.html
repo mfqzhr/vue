@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>{{msg | msgFormat}}</p>
+    </div>
+
+    <script>
+        Vue.filter('msgFormat', function(msg){
+            return msg.replace('飘动', '流逝')
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '让往事都随风飘动'
+            }
+        })
+    </script>
+    
+</body>
+</html>
