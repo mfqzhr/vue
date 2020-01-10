@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/lib/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- 父组件向子组件传递方法的时候使用事件绑定机制 -->
+        <com1 @func="show"></com1>
+
+    </div>
+    <template id="temp1">
+        <div>
+            <h1>这是子组件</h1>
+            <input type="button" value="触发组件按钮" @click="myclick">
+        </div>
+    </template>
+    <script>
+
+        var com1 = {
+            template: '#temp1',
+            methods: {
+                myclick(){
+                    alert("click")
+                    //原语: 触发 调用
+                    this.$emit('func')
+                }
+            },
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                show() {
+                    alert("show")
+                }
+            },
+            components: {
+                com1
+            }
+        })
+    </script>
+</body>
+
+
+</html>

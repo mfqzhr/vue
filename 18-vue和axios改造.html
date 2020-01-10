@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue</title>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <script src="./lib/bootstrap.js"></script>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/axios.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <!-- form-inline 可以让所有的东西都在一行显示 -->
+            <div class="panel-body form-inline">
+                <label>
+                    name:
+                    <input type="text" v-model="name" class="form-control">
+
+                </label>
+                <label>
+                    <a class="btn btn-info" @click="add" role="button">添加</a>
+                </label>
+                <label>
+                    请输入关键字:
+                    <input type="text" class="form-control">
+
+                </label>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>ctime</th>
+                    <th>operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td>
+                        <a class="btn btn-danger  btn-sm" @click.prevent="del(item.id)" role="button">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <script>
+
+        var req = axios.create({
+            baseURL: 'http://8qqh36.natappfree.cc',
+            timeout: 1000,
+            headers: { 'X-Custom-Header': 'foobar' }
+        });
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                list: [
+
+
+                ]
+            },
+            created() {//当vm实例的data和methods初始化成功以后,vm实例会自动执行
+                this.getAllList()
+            },
+            methods: {
+                add() {
+
+                    req.post('/product/add', {
+
+                        name: this.name
+
+                    }
+                    )
+                        .then((response) => {
+                            console(response)
+                            this.getAllList()
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                },
+                getAllList() {
+                    req.get('/product/list', {
+
+                    })
+                        .then((response) => {
+                            this.list = response.data
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                },
+                del(id) {
+                    axios.get('http://8qqh36.natappfree.cc/product/del?id=' + id).then((res) => {
+                        this.getAllList()
+                    }).catch(function (err) {
+                        console.log(err)
+                    })
+
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>

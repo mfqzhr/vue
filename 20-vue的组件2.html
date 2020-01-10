@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <template id="btn">
+        <div>
+            <h2>我是一个好朋友</h2>
+        </div>
+    </template>
+    <div id="app">
+        <my-button></my-button>
+        <login></login>
+    </div>
+
+    <div id="app2">
+         <my-button></my-button>
+         <login></login>
+
+    </div>
+
+    <template id="h1">
+        <div><h1>哈哈</h1></div>
+    </template>
+    
+    <script>
+       Vue.component('my-button', {
+           template: '#btn'
+       })
+
+       var vm = new Vue({
+           el: '#app',
+           data: {
+
+           },
+           components: {//定义实例内部的私有属性
+                login: {
+                    template: '#h1'
+                }            
+           }
+       })   
+       var vm2 = new Vue({
+           el: '#app2',
+           data: {
+
+           }
+       })
+    </script>
+    
+</body>
+</html>
